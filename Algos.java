@@ -133,7 +133,7 @@ public class Algos {
                     long startTime = System.currentTimeMillis();
                     int iKMP = a.KMPAlgo(tweet[9], matcher.group());
                     long endTime = System.currentTimeMillis();
-                    System.out.println("BM took " + (endTime - startTime) + " milliseconds");
+                    System.out.println("KMP took " + (endTime - startTime) + " milliseconds");
                     
                     if (iKMP != -1) {
                         System.out.println("Pattern found at index " + iKMP);
