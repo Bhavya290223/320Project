@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.BufferedReader;
 import java.lang.Math;
 
 public class Algos {
@@ -92,41 +93,44 @@ public class Algos {
     }
 
     public static void main(String[] args) {
-        HashMap<String, String> abbs = new HashMap<String, String>();
-        abbs.put("int", "Integer");
-        abbs.put("str", "String");
-        abbs.put("bool", "Boolean");
-        abbs.put("flt", "Float");
-        abbs.put("dbl", "Double");
-        abbs.put("chr", "Character");
+        BufferedReader br = new BufferedReader(new FileReader("Abbreviations_and_Slang.txt"));
+        String line1 =  br.readLine();
+        HashMap<String,String> abbs = new HashMap<String, String>();
+
+        while(line1 != null){
+            String str[] = line1.split(",");
+            abbs.put(str[0], str[1]);
+        }
+        br.close();
 
         Algos a = new Algos();
         String pattern = "\\b[A-Z]{2,}\\b";
         Pattern regex = Pattern.compile(pattern);
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("filename.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("covidvaccine 2.csv"));
             String line = reader.readLine();
             while (line != null) {
-                Matcher matcher = regex.matcher(line);
+                String[] tweet = line.split(","); 
+                Matcher matcher = regex.matcher(tweet[9]);
                 if (matcher.find()) {
-                    int iBM = a.BoyerMooreAlgo(line, matcher.group());
+                    int iBM = a.BoyerMooreAlgo(tweet[9], matcher.group());
                     if (iBM != -1) {
                         System.out.println("Pattern found at index " + iBM);
-                        char[] chars = line.toCharArray();
+                        char[] chars = tweet[9].toCharArray();
                         chars[iBM] = abbs.get(matcher.group());
-                        line = String.valueOf(chars);
+                        tweet[9] = String.valueOf(chars);
                         System.out.println("Pattern changed at index " + iBM);
                     } else {
                         System.out.println("Pattern not found");
                     }
         
-                    int iKMP = a.KMPAlgo(line, matcher.group());
+                    int iKMP = a.KMPAlgo(tweet[9], matcher.group());
                     if (iKMP != -1) {
                         System.out.println("Pattern found at index " + iKMP);
-                        char[] chars = line.toCharArray();
+                        char[] chars = tweet[9].toCharArray();
                         chars[iKMP] = abbs.get(matcher.group());
-                        line = String.valueOf(chars);
+                        tweet[9] = String.valueOf(chars);
                         System.out.println("Pattern changed at index " + iKMP);
                     } else {
                         System.out.println("Pattern not found");
