@@ -114,7 +114,12 @@ public class Algos {
                 String[] tweet = line.split(","); 
                 Matcher matcher = regex.matcher(tweet[9]);
                 if (matcher.find()) {
+                    
+                    long startTime = System.currentTimeMillis();
                     int iBM = a.BoyerMooreAlgo(tweet[9], matcher.group());
+                    long endTime = System.currentTimeMillis();
+                    System.out.println("BM took " + (endTime - startTime) + " milliseconds");
+                    
                     if (iBM != -1) {
                         System.out.println("Pattern found at index " + iBM);
                         char[] chars = tweet[9].toCharArray();
@@ -124,8 +129,12 @@ public class Algos {
                     } else {
                         System.out.println("Pattern not found");
                     }
-        
+                    
+                    long startTime = System.currentTimeMillis();
                     int iKMP = a.KMPAlgo(tweet[9], matcher.group());
+                    long endTime = System.currentTimeMillis();
+                    System.out.println("BM took " + (endTime - startTime) + " milliseconds");
+                    
                     if (iKMP != -1) {
                         System.out.println("Pattern found at index " + iKMP);
                         char[] chars = tweet[9].toCharArray();
